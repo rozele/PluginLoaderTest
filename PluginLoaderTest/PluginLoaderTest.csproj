@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="McMaster.NETCore.Plugins" Version="0.2.4" />
+    <PackageReference Include="System.Composition" Version="1.2.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj" />
+  </ItemGroup>
+  <Target Name="PublishPlugins" BeforeTargets="Build">
+    <ItemGroup>
+      <PluginProject Include="..\TestPlugin\TestPlugin.csproj" />
+    </ItemGroup>
+    <MSBuild Projects="@(PluginProject)" Targets="Publish" Properties="PublishDir=$(TargetDir)plugins\%(FileName)\" />
+  </Target>
+</Project>
